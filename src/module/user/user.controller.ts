@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create.user.dto';
 
@@ -12,8 +12,11 @@ export class UserController {
   }
 
   @Get()
-  async getAllUsers() {
-    return await this.userService.getAllUsers();
+  async getAllUsers(
+    @Query('page') page?: number,
+    @Query('limit') limit?: number,
+  ) {
+    return await this.userService.getAllUsers(page, limit);
   }
 
   @Get(':email')

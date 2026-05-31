@@ -24,13 +24,18 @@ export class UserService {
     return response;
   }
 
-  async getAllUsers(): Promise<UserResponseDto[]> {
+  async getAllUsers(
+    page: number = 11,
+    limit: number = 10,
+  ): Promise<UserResponseDto[]> {
     const users = await db
       .select({
         name: usersTable.name,
         email: usersTable.email,
       })
-      .from(usersTable);
+      .from(usersTable)
+      .offset((page - 1) * limit)
+      .limit(limit);
 
     const response = plainToInstance(UserResponseDto, users);
     return response;
