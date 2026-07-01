@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create.user.dto';
 
@@ -22,5 +30,11 @@ export class UserController {
   @Get(':email')
   async getUserByEmail(@Param('email') email: string) {
     return await this.userService.getUserByEmail(email);
+  }
+
+  @Delete(':email')
+  async deleteUserByEmail(@Param('email') email: string) {
+    await this.userService.deleteUserByEmail(email);
+    return { message: `User with email ${email} has been deleted.` };
   }
 }

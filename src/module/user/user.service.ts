@@ -25,7 +25,7 @@ export class UserService {
   }
 
   async getAllUsers(
-    page: number = 11,
+    page: number = 1,
     limit: number = 10,
   ): Promise<UserResponseDto[]> {
     const users = await db
@@ -57,5 +57,9 @@ export class UserService {
 
     const response = plainToInstance(UserResponseDto, user[0]);
     return response;
+  }
+
+  async deleteUserByEmail(email: string): Promise<void> {
+    await db.delete(usersTable).where(eq(usersTable.email, email));
   }
 }
